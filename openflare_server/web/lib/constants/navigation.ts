@@ -12,6 +12,11 @@ export const dashboardNavigation: NavigationItem[] = [
     icon: 'node',
   },
   {
+    href: '/proxy-route',
+    label: '规则',
+    icon: 'proxy',
+  },
+  {
     href: '/website',
     label: '网站',
     icon: 'website',
@@ -20,11 +25,6 @@ export const dashboardNavigation: NavigationItem[] = [
     href: '/origin',
     label: '源站',
     icon: 'origin',
-  },
-  {
-    href: '/proxy-route',
-    label: '规则',
-    icon: 'proxy',
   },
   {
     href: '/config-version',
