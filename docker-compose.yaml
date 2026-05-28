@@ -2,7 +2,7 @@ services:
   openflare-agent:
     build:
         context: .
-        dockerfile: Dockerfile
+        dockerfile: openflare_agent/Dockerfile
     container_name: openflare-agent
     restart: unless-stopped
 
@@ -12,7 +12,7 @@ services:
       - "127.0.0.1:18081:18081"
 
     volumes:
-      - ./data/:/data
+      - ./openflare_agent/data/:/data
 
     environment:
       OPENFLARE_SERVER_URL: "http://host.docker.internal:3000"

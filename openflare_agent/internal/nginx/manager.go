@@ -166,6 +166,9 @@ func (m *Manager) writeTargetFiles(mainConfig string, routeConfig string, suppor
 	if err := m.writePowConfig(supportFiles); err != nil {
 		return err
 	}
+	if err := m.ensureMimeTypes(); err != nil {
+		return err
+	}
 	if strings.TrimSpace(m.OpenrestyResolverDirective) == "" && strings.Contains(routeConfig, "set $openflare_upstream ") {
 		slog.Warn("runtime-resolved hostname upstreams detected without available resolvers; hostname origin requests may fail until resolvers are configured")
 	}
@@ -806,6 +809,23 @@ func removeEmptyManagedDirs(baseDir string) error {
 		}
 	}
 	return nil
+}
+
+func (m *Manager) ensureMimeTypes() error {
+	if m.MainConfigPath == "" {
+		return nil
+	}
+	configDir := filepath.Dir(m.MainConfigPath)
+	mimeTypesPath := filepath.Join(configDir, "mime.types")
+	if _, err := os.Stat(mimeTypesPath); err == nil {
+		return nil
+	} else if !os.IsNotExist(err) {
+		return err
+	}
+	if err := os.MkdirAll(configDir, 0o755); err != nil {
+		return err
+	}
+	return os.WriteFile(mimeTypesPath, []byte(DefaultMimeTypes), 0o644)
 }
 
 func (m *Manager) renderRouteConfig(content string) string {
