@@ -767,7 +767,7 @@ function WAFBindingSection({ route }: { route: ProxyRouteItem }) {
   return (
     <ConfigSectionShell
       title="WAF"
-      description="全局规则组始终生效；这里可以为当前网站叠加自定义规则组。PoW 规则请在 WAF 页面统一配置和批量应用。"
+      description="全局规则组始终生效；这里可以为当前网站叠加自定义规则组。"
       formId="proxy-route-waf-form"
       saving={wafMutation.isPending}
     >
@@ -779,7 +779,14 @@ function WAFBindingSection({ route }: { route: ProxyRouteItem }) {
           description={getErrorMessage(wafQuery.error)}
         />
       ) : (
-        <div className="space-y-5">
+        <form
+          id="proxy-route-waf-form"
+          className="space-y-5"
+          onSubmit={(e) => {
+            e.preventDefault();
+            wafMutation.mutate(selectedIDs);
+          }}
+        >
           {wafMutation.isError ? (
             <InlineMessage
               tone="danger"
@@ -852,17 +859,7 @@ function WAFBindingSection({ route }: { route: ProxyRouteItem }) {
           {(wafQuery.data?.rule_groups ?? []).length === 0 ? (
             <EmptyState title="暂无自定义 WAF 规则组" />
           ) : null}
-
-          <div className="flex justify-end">
-            <PrimaryButton
-              type="button"
-              disabled={wafMutation.isPending}
-              onClick={() => wafMutation.mutate(selectedIDs)}
-            >
-              {wafMutation.isPending ? '保存中...' : '保存 WAF 绑定'}
-            </PrimaryButton>
-          </div>
-        </div>
+        </form>
       )}
     </ConfigSectionShell>
   );
