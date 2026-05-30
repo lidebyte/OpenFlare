@@ -19,7 +19,9 @@ RUN go build -trimpath -ldflags "-s -w -X 'openflare-agent/internal/config.Agent
 
 FROM openresty/openresty:alpine
 
-RUN apk add --no-cache ca-certificates tzdata \
+RUN apk add --no-cache ca-certificates tzdata perl libmaxminddb \
+    && ln -sf /usr/lib/libmaxminddb.so.0 /usr/lib/libmaxminddb.so \
+    && opm get anjia0532/lua-resty-maxminddb \
     && mkdir -p /etc/openflare /data
 
 ENV OPENFLARE_OPENRESTY_PATH=openresty \

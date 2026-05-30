@@ -169,11 +169,20 @@ end
 
 local config = load_config()
 if not config then
+    if config_dict:add("_missing_config_logged", true, 60) then
+        ngx.log(ngx.WARN, "openflare waf config is missing or invalid; requests will be allowed")
+    end
     return
 end
 
 local ip = ngx.var.remote_addr or ""
 local groups = active_groups(config)
+if #groups == 0 then
+    if config_dict:add("_empty_groups_logged", true, 60) then
+        ngx.log(ngx.WARN, "openflare waf has no active rule group for site: ", ngx.var.openflare_waf_site or "")
+    end
+    return
+end
 
 for _, group in ipairs(groups) do
     if ip_matches(group.ip_whitelist, ip) then

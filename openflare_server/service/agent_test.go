@@ -43,6 +43,38 @@ func TestGetActiveConfigForAgentIncludesPoWConfig(t *testing.T) {
 	}
 }
 
+func TestGetActiveConfigForAgentIncludesWAFConfig(t *testing.T) {
+	setupServiceTestDB(t)
+
+	_, err := CreateProxyRoute(ProxyRouteInput{
+		Domain:    "waf-agent.example.com",
+		OriginURL: "https://origin.internal",
+		Enabled:   true,
+	})
+	if err != nil {
+		t.Fatalf("CreateProxyRoute failed: %v", err)
+	}
+
+	if _, err := PublishConfigVersion("root", false); err != nil {
+		t.Fatalf("PublishConfigVersion failed: %v", err)
+	}
+
+	activeConfig, err := GetActiveConfigForAgent()
+	if err != nil {
+		t.Fatalf("GetActiveConfigForAgent failed: %v", err)
+	}
+
+	for _, file := range activeConfig.SupportFiles {
+		if file.Path == "waf_config.json" {
+			if !strings.Contains(file.Content, `"rule_groups"`) {
+				t.Fatalf("expected waf_config.json content to include rule groups, got %s", file.Content)
+			}
+			return
+		}
+	}
+	t.Fatal("expected agent config to include waf_config.json support file")
+}
+
 func TestGetActiveConfigForAgentUsesTenMinutePoWSessionDefault(t *testing.T) {
 	setupServiceTestDB(t)
 
