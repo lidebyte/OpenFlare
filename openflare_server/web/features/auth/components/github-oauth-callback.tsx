@@ -16,7 +16,10 @@ export function GitHubOAuthCallback() {
   const { setUser } = useAuth();
   const handledCodeRef = useRef<string | null>(null);
   const [prompt, setPrompt] = useState('正在处理 GitHub 授权结果...');
-  const [message, setMessage] = useState<{ tone: 'danger' | 'success'; text: string } | null>(null);
+  const [message, setMessage] = useState<{
+    tone: 'danger' | 'success';
+    text: string;
+  } | null>(null);
   const code = searchParams?.get('code')?.trim() ?? '';
 
   const mutation = useMutation({
@@ -28,14 +31,20 @@ export function GitHubOAuthCallback() {
     },
     onError: (error: Error) => {
       setPrompt('授权处理失败');
-      setMessage({ tone: 'danger', text: error.message || 'GitHub 授权失败，请稍后重试。' });
+      setMessage({
+        tone: 'danger',
+        text: error.message || 'GitHub 授权失败，请稍后重试。',
+      });
     },
   });
 
   useEffect(() => {
     if (!code) {
       setPrompt('缺少授权 code');
-      setMessage({ tone: 'danger', text: '未收到 GitHub 授权参数，请返回登录页重试。' });
+      setMessage({
+        tone: 'danger',
+        text: '未收到 GitHub 授权参数，请返回登录页重试。',
+      });
       return;
     }
 
@@ -48,10 +57,12 @@ export function GitHubOAuthCallback() {
   }, [code, mutation]);
 
   return (
-    <AppCard title='GitHub OAuth 回调' description={prompt}>
-      <div className='space-y-4'>
+    <AppCard title="GitHub OAuth 回调" description={prompt}>
+      <div className="space-y-4">
         {mutation.isPending ? <LoadingState /> : null}
-        {message ? <InlineMessage tone={message.tone} message={message.text} /> : null}
+        {message ? (
+          <InlineMessage tone={message.tone} message={message.text} />
+        ) : null}
       </div>
     </AppCard>
   );

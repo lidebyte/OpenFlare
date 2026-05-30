@@ -404,7 +404,9 @@ export function NodeDetailPage({ nodeId }: { nodeId: string }) {
       });
       setHealthEventCleanupModalOpen(false);
       await Promise.all([
-        queryClient.invalidateQueries({ queryKey: ['node-observability', nodeId] }),
+        queryClient.invalidateQueries({
+          queryKey: ['node-observability', nodeId],
+        }),
         queryClient.invalidateQueries({ queryKey: ['dashboard', 'overview'] }),
       ]);
     },
@@ -869,9 +871,7 @@ export function NodeDetailPage({ nodeId }: { nodeId: string }) {
                 )}
               </AppCard>
 
-              <AppCard
-                title="实时资源"
-              >
+              <AppCard title="实时资源">
                 {observabilityQuery.isLoading ? (
                   <LoadingState />
                 ) : observabilityQuery.isError ? (
@@ -930,9 +930,7 @@ export function NodeDetailPage({ nodeId }: { nodeId: string }) {
                 )}
               </AppCard>
 
-              <AppCard
-                title="网络流量"
-              >
+              <AppCard title="网络流量">
                 {observabilityQuery.isLoading ? (
                   <LoadingState />
                 ) : observabilityQuery.isError ? (
@@ -1628,7 +1626,9 @@ export function NodeDetailPage({ nodeId }: { nodeId: string }) {
 
                   {nodeInstallCommand ? (
                     <div>
-                      <p className="mb-2 text-sm font-medium text-[var(--foreground-primary)]">脚本部署 (Linux / macOS)</p>
+                      <p className="mb-2 text-sm font-medium text-[var(--foreground-primary)]">
+                        脚本部署 (Linux / macOS)
+                      </p>
                       <CodeBlock className="whitespace-pre-wrap">
                         {nodeInstallCommand}
                       </CodeBlock>
@@ -1637,7 +1637,9 @@ export function NodeDetailPage({ nodeId }: { nodeId: string }) {
 
                   {nodeDockerInstallCommand ? (
                     <div>
-                      <p className="mb-2 text-sm font-medium text-[var(--foreground-primary)]">Docker 部署</p>
+                      <p className="mb-2 text-sm font-medium text-[var(--foreground-primary)]">
+                        Docker 部署
+                      </p>
                       <CodeBlock className="whitespace-pre-wrap">
                         {nodeDockerInstallCommand}
                       </CodeBlock>
@@ -1835,8 +1837,12 @@ export function NodeDetailPage({ nodeId }: { nodeId: string }) {
           />
         ) : (
           <div className="space-y-3 text-sm text-[var(--foreground-secondary)]">
-            <p>该操作会删除当前节点已记录的全部健康事件，包括活动中与已恢复事件。</p>
-            <p>这不会影响节点后续继续上报新的健康事件，但现有时间线与相关摘要会立即刷新。</p>
+            <p>
+              该操作会删除当前节点已记录的全部健康事件，包括活动中与已恢复事件。
+            </p>
+            <p>
+              这不会影响节点后续继续上报新的健康事件，但现有时间线与相关摘要会立即刷新。
+            </p>
           </div>
         )}
       </AppModal>

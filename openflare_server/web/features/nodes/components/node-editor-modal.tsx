@@ -151,8 +151,8 @@ function getRegionCenter(feature: GeoJsonFeature) {
 }
 
 function buildRegionOptions() {
-  const features = ((worldGeoJson as { features?: GeoJsonFeature[] }).features ??
-    []) as GeoJsonFeature[];
+  const features = ((worldGeoJson as { features?: GeoJsonFeature[] })
+    .features ?? []) as GeoJsonFeature[];
   const options = new Map<string, RegionOption>();
 
   for (const feature of features) {
@@ -186,7 +186,7 @@ function buildFormValues(node?: Partial<NodeItem> | null): NodeEditorValues {
     ip: node.ip ?? '',
     auto_update_enabled: node.auto_update_enabled ?? false,
     geo_manual_override: node.geo_manual_override ?? false,
-    geo_region: node.geo_manual_override ? node.geo_name ?? '' : '',
+    geo_region: node.geo_manual_override ? (node.geo_name ?? '') : '',
     geo_name: node.geo_name ?? '',
     geo_latitude:
       node.geo_latitude === undefined || node.geo_latitude === null

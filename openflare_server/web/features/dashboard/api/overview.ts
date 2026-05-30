@@ -27,7 +27,9 @@ function isCompactDistributionItem(
 }
 
 function isCompactTrafficTrendPoint(
-  value: DashboardOverview['trends']['traffic_24h'][number] | CompactTrafficTrendPoint,
+  value:
+    | DashboardOverview['trends']['traffic_24h'][number]
+    | CompactTrafficTrendPoint,
 ): value is CompactTrafficTrendPoint {
   return Array.isArray(value);
 }
@@ -74,7 +76,10 @@ function normalizeDistributionItems(
 
 function normalizeTrafficTrendPoints(
   items:
-    | Array<DashboardOverview['trends']['traffic_24h'][number] | CompactTrafficTrendPoint>
+    | Array<
+        | DashboardOverview['trends']['traffic_24h'][number]
+        | CompactTrafficTrendPoint
+      >
     | null
     | undefined,
 ) {
@@ -114,7 +119,8 @@ function normalizeCapacityTrendPoints(
 function normalizeNetworkTrendPoints(
   items:
     | Array<
-        DashboardOverview['trends']['network_24h'][number] | CompactNetworkTrendPoint
+        | DashboardOverview['trends']['network_24h'][number]
+        | CompactNetworkTrendPoint
       >
     | null
     | undefined,
@@ -136,7 +142,8 @@ function normalizeNetworkTrendPoints(
 function normalizeDiskIOTrendPoints(
   items:
     | Array<
-        DashboardOverview['trends']['disk_io_24h'][number] | CompactDiskIOTrendPoint
+        | DashboardOverview['trends']['disk_io_24h'][number]
+        | CompactDiskIOTrendPoint
       >
     | null
     | undefined,
@@ -154,7 +161,10 @@ function normalizeDiskIOTrendPoints(
 }
 
 function normalizeDashboardNodes(
-  items: Array<DashboardNodeHealth | CompactDashboardNodeHealth> | null | undefined,
+  items:
+    | Array<DashboardNodeHealth | CompactDashboardNodeHealth>
+    | null
+    | undefined,
 ): DashboardNodeHealth[] {
   return arrayOrEmpty(items).map((item) =>
     isCompactDashboardNode(item)
@@ -185,11 +195,7 @@ function normalizeDashboardNodes(
 }
 
 function normalizeDashboardOverview(
-  overview:
-    | DashboardOverview
-    | DashboardOverviewCompact
-    | null
-    | undefined,
+  overview: DashboardOverview | DashboardOverviewCompact | null | undefined,
 ): DashboardOverview | null {
   if (!overview) {
     return null;
@@ -209,8 +215,12 @@ function normalizeDashboardOverview(
       source_countries: normalizeDistributionItems(
         overview.distributions?.source_countries,
       ),
-      status_codes: normalizeDistributionItems(overview.distributions?.status_codes),
-      top_domains: normalizeDistributionItems(overview.distributions?.top_domains),
+      status_codes: normalizeDistributionItems(
+        overview.distributions?.status_codes,
+      ),
+      top_domains: normalizeDistributionItems(
+        overview.distributions?.top_domains,
+      ),
     },
     trends: {
       traffic_24h: normalizeTrafficTrendPoints(overview.trends?.traffic_24h),
@@ -222,8 +232,8 @@ function normalizeDashboardOverview(
 }
 
 export async function getDashboardOverview() {
-  const overview = await apiRequest<DashboardOverview | DashboardOverviewCompact>(
-    '/dashboard/overview',
-  );
+  const overview = await apiRequest<
+    DashboardOverview | DashboardOverviewCompact
+  >('/dashboard/overview');
   return normalizeDashboardOverview(overview);
 }

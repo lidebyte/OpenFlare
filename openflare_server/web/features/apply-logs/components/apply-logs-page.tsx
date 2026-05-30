@@ -29,11 +29,8 @@ import {
 } from '@/features/shared/components/resource-primitives';
 import { formatDateTime, formatRelativeTime } from '@/lib/utils/date';
 
-const applyLogsQueryKey = (
-  nodeId: string,
-  pageNo: number,
-  pageSize: number,
-) => ['apply-logs', nodeId, pageNo, pageSize] as const;
+const applyLogsQueryKey = (nodeId: string, pageNo: number, pageSize: number) =>
+  ['apply-logs', nodeId, pageNo, pageSize] as const;
 
 const pageSizeOptions = [20, 50, 100];
 const emptyApplyLogRows: ApplyLogItem[] = [];
@@ -64,7 +61,12 @@ function truncateHash(value: string) {
   return value.length > 12 ? `${value.slice(0, 12)}...` : value;
 }
 
-function buildSummary(rows: ApplyLogItem[], total: number, current: number, totalPage: number) {
+function buildSummary(
+  rows: ApplyLogItem[],
+  total: number,
+  current: number,
+  totalPage: number,
+) {
   const nodeIds = new Set(rows.map((item) => item.node_id));
   return [
     { label: '总记录数', value: total },
@@ -209,14 +211,17 @@ export function ApplyLogsPage() {
         <InlineMessage tone={feedback.tone} message={feedback.message} />
       ) : null}
 
-      <AppCard title="日志摘要" description="后端按分页返回应用日志，页面仅展示当前页数据和总量信息。">
+      <AppCard
+        title="日志摘要"
+        description="后端按分页返回应用日志，页面仅展示当前页数据和总量信息。"
+      >
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {summary.map((item) => (
             <div
               key={item.label}
               className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-elevated)] px-4 py-4"
             >
-              <p className="text-xs tracking-[0.2em] uppercase text-[var(--foreground-muted)]">
+              <p className="text-xs tracking-[0.2em] text-[var(--foreground-muted)] uppercase">
                 {item.label}
               </p>
               <p className="mt-2 text-lg font-semibold text-[var(--foreground-primary)]">
@@ -348,13 +353,16 @@ export function ApplyLogsPage() {
 
               <div className="flex flex-col gap-3 border-t border-[var(--border-default)] pt-4 md:flex-row md:items-center md:justify-between">
                 <p className="text-sm text-[var(--foreground-secondary)]">
-                  第 {current} / {Math.max(totalPage, 1)} 页，共 {total} 条记录。
+                  第 {current} / {Math.max(totalPage, 1)} 页，共 {total}{' '}
+                  条记录。
                 </p>
                 <div className="flex flex-wrap gap-2">
                   <SecondaryButton
                     type="button"
                     disabled={current <= 1}
-                    onClick={() => setPageNo((previous) => Math.max(1, previous - 1))}
+                    onClick={() =>
+                      setPageNo((previous) => Math.max(1, previous - 1))
+                    }
                   >
                     上一页
                   </SecondaryButton>
@@ -363,7 +371,9 @@ export function ApplyLogsPage() {
                     disabled={totalPage === 0 || current >= totalPage}
                     onClick={() =>
                       setPageNo((previous) =>
-                        totalPage > 0 ? Math.min(totalPage, previous + 1) : previous,
+                        totalPage > 0
+                          ? Math.min(totalPage, previous + 1)
+                          : previous,
                       )
                     }
                   >
@@ -387,14 +397,30 @@ export function ApplyLogsPage() {
           <div className="space-y-4">
             <div className="flex flex-wrap gap-2">
               <StatusBadge {...getResultMeta(selectedLog.result)} />
-              <StatusBadge label={`Node：${selectedLog.node_id}`} variant="info" />
-              <StatusBadge label={`版本：${selectedLog.version}`} variant="warning" />
+              <StatusBadge
+                label={`Node：${selectedLog.node_id}`}
+                variant="info"
+              />
+              <StatusBadge
+                label={`版本：${selectedLog.version}`}
+                variant="warning"
+              />
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
-              <MetricCard label="创建时间" value={formatDateTime(selectedLog.created_at)} />
-              <MetricCard label="相对时间" value={formatRelativeTime(selectedLog.created_at)} />
-              <MetricCard label="目标 Checksum" value={selectedLog.checksum || '—'} breakAll />
+              <MetricCard
+                label="创建时间"
+                value={formatDateTime(selectedLog.created_at)}
+              />
+              <MetricCard
+                label="相对时间"
+                value={formatRelativeTime(selectedLog.created_at)}
+              />
+              <MetricCard
+                label="目标 Checksum"
+                value={selectedLog.checksum || '—'}
+                breakAll
+              />
               <MetricCard
                 label="支持文件数"
                 value={String(selectedLog.support_file_count)}
@@ -412,10 +438,10 @@ export function ApplyLogsPage() {
             </div>
 
             <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-elevated)] px-4 py-4">
-              <p className="text-xs tracking-[0.2em] uppercase text-[var(--foreground-muted)]">
+              <p className="text-xs tracking-[0.2em] text-[var(--foreground-muted)] uppercase">
                 消息
               </p>
-              <pre className="mt-3 whitespace-pre-wrap break-words text-sm leading-6 text-[var(--foreground-primary)]">
+              <pre className="mt-3 text-sm leading-6 break-words whitespace-pre-wrap text-[var(--foreground-primary)]">
                 {selectedLog.message || '—'}
               </pre>
             </div>
@@ -430,7 +456,10 @@ export function ApplyLogsPage() {
         onClose={() => setCleanupModalOpen(false)}
         footer={
           <div className="flex flex-wrap justify-end gap-2">
-            <SecondaryButton type="button" onClick={() => setCleanupModalOpen(false)}>
+            <SecondaryButton
+              type="button"
+              onClick={() => setCleanupModalOpen(false)}
+            >
               取消
             </SecondaryButton>
             <PrimaryButton
@@ -505,7 +534,7 @@ function MetricCard({
 }) {
   return (
     <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-elevated)] px-4 py-4">
-      <p className="text-xs tracking-[0.2em] uppercase text-[var(--foreground-muted)]">
+      <p className="text-xs tracking-[0.2em] text-[var(--foreground-muted)] uppercase">
         {label}
       </p>
       <p

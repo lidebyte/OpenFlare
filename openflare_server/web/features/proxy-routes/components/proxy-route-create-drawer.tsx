@@ -156,7 +156,9 @@ export function ProxyRouteCreateDrawer({
         .map((item) => item.domain.trim().toLowerCase())
         .filter(Boolean);
       const domainCertIDs = buildDomainCertificateIDs(values.domain_rows);
-      const selectedCertIDs = normalizeSelectedCertificateIDs(values.domain_rows);
+      const selectedCertIDs = normalizeSelectedCertificateIDs(
+        values.domain_rows,
+      );
       const { urls } = parseOriginUrls(values.origin_urls_text);
       const primaryOrigin = parseOriginUrl(urls[0]);
 
@@ -182,7 +184,8 @@ export function ProxyRouteCreateDrawer({
         cert_id: selectedCertIDs[0] ?? null,
         cert_ids: selectedCertIDs,
         domain_cert_ids: domainCertIDs,
-        redirect_http: selectedCertIDs.length > 0 ? values.redirect_http : false,
+        redirect_http:
+          selectedCertIDs.length > 0 ? values.redirect_http : false,
         limit_conn_per_server: 0,
         limit_conn_per_ip: 0,
         limit_rate: '',
@@ -248,7 +251,9 @@ export function ProxyRouteCreateDrawer({
         <ResourceField
           label="域名列表"
           hint="每行配置一个域名，可按需为该行选择证书。保存时会自动汇总站点证书集合。"
-          error={form.formState.errors.domain_rows?.message as string | undefined}
+          error={
+            form.formState.errors.domain_rows?.message as string | undefined
+          }
           container="div"
         >
           <Controller
@@ -287,7 +292,9 @@ export function ProxyRouteCreateDrawer({
         >
           <ResourceTextarea
             aria-label="上游地址"
-            placeholder={'https://origin-a.internal:443\nhttps://origin-b.internal:443'}
+            placeholder={
+              'https://origin-a.internal:443\nhttps://origin-b.internal:443'
+            }
             {...form.register('origin_urls_text')}
           />
         </ResourceField>

@@ -86,7 +86,9 @@ export function getUpdateMode(node: NodeItem) {
   return { label: '手动', variant: 'info' as const };
 }
 
-export function getOpenrestyStatusVariant(status: NodeItem['openresty_status']) {
+export function getOpenrestyStatusVariant(
+  status: NodeItem['openresty_status'],
+) {
   if (status === 'healthy') {
     return 'success';
   }
@@ -178,12 +180,15 @@ export function buildNodeInstallCommand(serverUrl: string, agentToken: string) {
   ].join('\n');
 }
 
-export function buildNodeDockerInstallCommand(serverUrl: string, agentToken: string) {
+export function buildNodeDockerInstallCommand(
+  serverUrl: string,
+  agentToken: string,
+) {
   return [
     `docker run -d --name openflare-agent --restart unless-stopped \\`,
     `  -p 80:80 -p 443:443 \\`,
     `  -e OPENFLARE_SERVER_URL=${serverUrl} \\`,
     `  -e OPENFLARE_AGENT_TOKEN=${agentToken} \\`,
-    `  ghcr.io/rain-kl/openflare-agent:latest`
+    `  ghcr.io/rain-kl/openflare-agent:latest`,
   ].join('\n');
 }

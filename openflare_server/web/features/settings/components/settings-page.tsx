@@ -927,7 +927,9 @@ export function SettingsPage() {
                             ) : (
                               <PrimaryButton
                                 type="button"
-                                onClick={() => handleBindAuthSource(source.name)}
+                                onClick={() =>
+                                  handleBindAuthSource(source.name)
+                                }
                                 disabled={
                                   busyKey === `auth-source-bind-${source.name}`
                                 }
@@ -1591,7 +1593,6 @@ export function SettingsPage() {
                 }
                 disabled={busyKey === 'toggle-EmailVerificationEnabled'}
               />
-
             </div>
             <div className="mt-5 text-sm text-[var(--foreground-secondary)]">
               当前已配置 {authSourcesQuery.data?.length ?? 0} 个认证源。

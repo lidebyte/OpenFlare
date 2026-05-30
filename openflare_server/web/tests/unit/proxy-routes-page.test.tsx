@@ -180,7 +180,10 @@ describe('Proxy route website pages', () => {
             primary_domain: payload.domain,
             domain_count: payload.domains.length,
             origin_url: payload.origin_url,
-            upstreams: JSON.stringify([payload.origin_url, ...payload.upstreams]),
+            upstreams: JSON.stringify([
+              payload.origin_url,
+              ...payload.upstreams,
+            ]),
             upstream_list: [payload.origin_url, ...payload.upstreams],
             enabled: payload.enabled,
             enable_https: payload.enable_https,
@@ -242,7 +245,9 @@ describe('Proxy route website pages', () => {
               JSON.stringify({
                 success: true,
                 message: '',
-                data: [{ id: 1, domain: '*.example.com', cert_id: 1, enabled: true }],
+                data: [
+                  { id: 1, domain: '*.example.com', cert_id: 1, enabled: true },
+                ],
               }),
             ),
           );
@@ -377,7 +382,9 @@ describe('Proxy route website pages', () => {
               JSON.stringify({
                 success: true,
                 message: '',
-                data: [{ id: 1, domain: '*.example.com', cert_id: 1, enabled: true }],
+                data: [
+                  { id: 1, domain: '*.example.com', cert_id: 1, enabled: true },
+                ],
               }),
             ),
           );

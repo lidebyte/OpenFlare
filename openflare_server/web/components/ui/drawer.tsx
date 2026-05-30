@@ -261,7 +261,9 @@ function useDrawerMetaContext() {
   const context = useContext(DrawerMetaContext);
 
   if (!context) {
-    throw new Error('Drawer title and description must be used within DrawerContent.');
+    throw new Error(
+      'Drawer title and description must be used within DrawerContent.',
+    );
   }
 
   return context;
@@ -271,14 +273,30 @@ export function DrawerHeader({
   className,
   ...props
 }: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn('border-b border-[var(--border-default)] px-6 py-5', className)} {...props} />;
+  return (
+    <div
+      className={cn(
+        'border-b border-[var(--border-default)] px-6 py-5',
+        className,
+      )}
+      {...props}
+    />
+  );
 }
 
 export function DrawerFooter({
   className,
   ...props
 }: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn('border-t border-[var(--border-default)] px-6 py-4', className)} {...props} />;
+  return (
+    <div
+      className={cn(
+        'border-t border-[var(--border-default)] px-6 py-4',
+        className,
+      )}
+      {...props}
+    />
+  );
 }
 
 export function DrawerTitle({
@@ -290,7 +308,10 @@ export function DrawerTitle({
   return (
     <h2
       id={titleId}
-      className={cn('text-xl font-semibold text-[var(--foreground-primary)]', className)}
+      className={cn(
+        'text-xl font-semibold text-[var(--foreground-primary)]',
+        className,
+      )}
       {...props}
     />
   );
@@ -305,7 +326,10 @@ export function DrawerDescription({
   return (
     <p
       id={descriptionId}
-      className={cn('mt-2 text-sm leading-6 text-[var(--foreground-secondary)]', className)}
+      className={cn(
+        'mt-2 text-sm leading-6 text-[var(--foreground-secondary)]',
+        className,
+      )}
       {...props}
     />
   );

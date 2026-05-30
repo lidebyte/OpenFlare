@@ -22,7 +22,10 @@ export function createProxyRoute(payload: ProxyRouteMutationPayload) {
   });
 }
 
-export function updateProxyRoute(id: number, payload: ProxyRouteMutationPayload) {
+export function updateProxyRoute(
+  id: number,
+  payload: ProxyRouteMutationPayload,
+) {
   return apiRequest<ProxyRouteItem>(`/proxy-routes/${id}/update`, {
     method: 'POST',
     body: JSON.stringify(payload),
@@ -41,5 +44,7 @@ export function getTlsCertificates() {
 
 export function matchManagedDomainCertificate(domain: string) {
   const searchParams = new URLSearchParams({ domain });
-  return apiRequest<ManagedDomainMatchResult>(`/managed-domains/match?${searchParams.toString()}`);
+  return apiRequest<ManagedDomainMatchResult>(
+    `/managed-domains/match?${searchParams.toString()}`,
+  );
 }

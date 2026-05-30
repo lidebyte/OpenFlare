@@ -136,7 +136,7 @@ export function WebsitesPage() {
             <div className="grid gap-4 lg:grid-cols-2">
               {domains.map((domain) => {
                 const certificate = domain.cert_id
-                  ? certificateMap.get(domain.cert_id) ?? null
+                  ? (certificateMap.get(domain.cert_id) ?? null)
                   : null;
                 const matchType = getMatchTypeMeta(domain.domain);
 
@@ -168,7 +168,7 @@ export function WebsitesPage() {
 
                         <div className="grid gap-3 md:grid-cols-1">
                           <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-panel)] px-4 py-3">
-                            <p className="text-xs uppercase tracking-[0.18em] text-[var(--foreground-muted)]">
+                            <p className="text-xs tracking-[0.18em] text-[var(--foreground-muted)] uppercase">
                               绑定证书
                             </p>
                             <p className="mt-2 text-sm text-[var(--foreground-primary)]">

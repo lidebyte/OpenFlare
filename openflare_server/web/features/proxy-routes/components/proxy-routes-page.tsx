@@ -87,7 +87,9 @@ export function ProxyRoutesPage() {
       setFeedback({ tone: 'success', message: '网站已删除。' });
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ['proxy-routes'] }),
-        queryClient.invalidateQueries({ queryKey: ['config-versions', 'diff'] }),
+        queryClient.invalidateQueries({
+          queryKey: ['config-versions', 'diff'],
+        }),
       ]);
     },
     onError: (error) => {
@@ -104,7 +106,9 @@ export function ProxyRoutesPage() {
       });
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ['config-versions'] }),
-        queryClient.invalidateQueries({ queryKey: ['config-versions', 'diff'] }),
+        queryClient.invalidateQueries({
+          queryKey: ['config-versions', 'diff'],
+        }),
       ]);
     },
     onError: (error) => {
@@ -135,7 +139,10 @@ export function ProxyRoutesPage() {
   }, [keyword, routes]);
 
   const diff = diffQuery.data;
-  const totalDomains = routes.reduce((sum, route) => sum + route.domain_count, 0);
+  const totalDomains = routes.reduce(
+    (sum, route) => sum + route.domain_count,
+    0,
+  );
   const enabledCount = routes.filter((route) => route.enabled).length;
 
   const handleDelete = (route: ProxyRouteItem) => {
@@ -243,11 +250,11 @@ export function ProxyRoutesPage() {
             <div className="space-y-3">
               <StatusBadge
                 label={
-                  diff && hasConfigChanges(diff) ? '有待发布变更' : '已与线上一致'
+                  diff && hasConfigChanges(diff)
+                    ? '有待发布变更'
+                    : '已与线上一致'
                 }
-                variant={
-                  diff && hasConfigChanges(diff) ? 'warning' : 'success'
-                }
+                variant={diff && hasConfigChanges(diff) ? 'warning' : 'success'}
               />
               <p className="text-sm text-[var(--foreground-secondary)]">
                 {diff
@@ -266,9 +273,7 @@ export function ProxyRoutesPage() {
           </AppCard>
         </div>
 
-        <AppCard
-          title="规则列表"
-        >
+        <AppCard title="规则列表">
           <div className="space-y-4">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
               <div className="max-w-xl">
@@ -356,7 +361,7 @@ export function ProxyRoutesPage() {
 
                       <div className="grid gap-3 md:grid-cols-2">
                         <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-panel)] px-4 py-3">
-                          <p className="text-xs uppercase tracking-[0.18em] text-[var(--foreground-muted)]">
+                          <p className="text-xs tracking-[0.18em] text-[var(--foreground-muted)] uppercase">
                             域名列表
                           </p>
                           <p className="mt-2 text-sm text-[var(--foreground-primary)]">
@@ -365,7 +370,7 @@ export function ProxyRoutesPage() {
                         </div>
 
                         <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-panel)] px-4 py-3">
-                          <p className="text-xs uppercase tracking-[0.18em] text-[var(--foreground-muted)]">
+                          <p className="text-xs tracking-[0.18em] text-[var(--foreground-muted)] uppercase">
                             上游摘要
                           </p>
                           <p className="mt-2 text-sm text-[var(--foreground-primary)]">
@@ -393,7 +398,9 @@ export function ProxyRoutesPage() {
         onCreated={async (route) => {
           await Promise.all([
             queryClient.invalidateQueries({ queryKey: ['proxy-routes'] }),
-            queryClient.invalidateQueries({ queryKey: ['config-versions', 'diff'] }),
+            queryClient.invalidateQueries({
+              queryKey: ['config-versions', 'diff'],
+            }),
           ]);
           router.push(`/proxy-route/detail?id=${route.id}&section=domains`);
         }}

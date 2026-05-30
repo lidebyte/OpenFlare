@@ -45,7 +45,12 @@ export function CleanupConfigVersionsModal({
           <SecondaryButton type="button" onClick={onClose} disabled={isPending}>
             取消
           </SecondaryButton>
-          <PrimaryButton type="submit" form="cleanup-form" disabled={isPending} className="bg-[var(--status-danger-foreground)] hover:bg-[var(--status-danger-foreground)] hover:opacity-90 border-[var(--status-danger-foreground)]">
+          <PrimaryButton
+            type="submit"
+            form="cleanup-form"
+            disabled={isPending}
+            className="border-[var(--status-danger-foreground)] bg-[var(--status-danger-foreground)] hover:bg-[var(--status-danger-foreground)] hover:opacity-90"
+          >
             {isPending ? '清理中...' : '确认清理'}
           </PrimaryButton>
         </div>

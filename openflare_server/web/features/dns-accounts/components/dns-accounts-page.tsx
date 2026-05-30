@@ -30,7 +30,10 @@ import { formatDateTime } from '@/lib/utils/date';
 
 export function DnsAccountsPage() {
   const queryClient = useQueryClient();
-  const [feedback, setFeedback] = useState<{ tone: 'info' | 'success' | 'danger'; message: string } | null>(null);
+  const [feedback, setFeedback] = useState<{
+    tone: 'info' | 'success' | 'danger';
+    message: string;
+  } | null>(null);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
 
   const dnsAccountsQuery = useQuery({
@@ -57,7 +60,10 @@ export function DnsAccountsPage() {
     deleteMutation.mutate(account.id);
   };
 
-  const accounts = useMemo(() => dnsAccountsQuery.data ?? [], [dnsAccountsQuery.data]);
+  const accounts = useMemo(
+    () => dnsAccountsQuery.data ?? [],
+    [dnsAccountsQuery.data],
+  );
 
   return (
     <>
@@ -73,30 +79,47 @@ export function DnsAccountsPage() {
               >
                 返回
               </Link>
-              <PrimaryButton type="button" onClick={() => setIsCreateOpen(true)}>
+              <PrimaryButton
+                type="button"
+                onClick={() => setIsCreateOpen(true)}
+              >
                 添加账号
               </PrimaryButton>
             </div>
           }
         />
 
-        {feedback ? <InlineMessage tone={feedback.tone} message={feedback.message} /> : null}
+        {feedback ? (
+          <InlineMessage tone={feedback.tone} message={feedback.message} />
+        ) : null}
 
         <AppCard title="DNS 账号列表">
           {dnsAccountsQuery.isLoading ? (
             <LoadingState />
           ) : dnsAccountsQuery.isError ? (
-            <ErrorState title="加载失败" description={getErrorMessage(dnsAccountsQuery.error)} />
+            <ErrorState
+              title="加载失败"
+              description={getErrorMessage(dnsAccountsQuery.error)}
+            />
           ) : accounts.length === 0 ? (
-            <EmptyState title="暂无 DNS 账号" description="点击右上角“添加账号”开始录入。" />
+            <EmptyState
+              title="暂无 DNS 账号"
+              description="点击右上角“添加账号”开始录入。"
+            />
           ) : (
             <div className="space-y-3">
               {accounts.map((account) => (
-                <div key={account.id} className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-elevated)] px-4 py-4">
+                <div
+                  key={account.id}
+                  className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-elevated)] px-4 py-4"
+                >
                   <div className="flex items-start justify-between gap-4">
                     <div className="space-y-2">
                       <p className="text-sm font-semibold text-[var(--foreground-primary)]">
-                        {account.name} <span className="ml-2 text-xs font-normal text-[var(--foreground-secondary)]">({account.type})</span>
+                        {account.name}{' '}
+                        <span className="ml-2 text-xs font-normal text-[var(--foreground-secondary)]">
+                          ({account.type})
+                        </span>
                       </p>
                       <div className="text-xs leading-5 text-[var(--foreground-secondary)]">
                         <p>创建于：{formatDateTime(account.created_at)}</p>
@@ -119,19 +142,31 @@ export function DnsAccountsPage() {
           )}
         </AppCard>
       </div>
-      
+
       {isCreateOpen && (
-        <DnsAccountCreateModal isOpen={isCreateOpen} onClose={() => setIsCreateOpen(false)} onCreated={() => {
-          setFeedback({ tone: 'success', message: 'DNS 账号已添加。' });
-          setIsCreateOpen(false);
-          queryClient.invalidateQueries({ queryKey: ['dns-accounts'] });
-        }} />
+        <DnsAccountCreateModal
+          isOpen={isCreateOpen}
+          onClose={() => setIsCreateOpen(false)}
+          onCreated={() => {
+            setFeedback({ tone: 'success', message: 'DNS 账号已添加。' });
+            setIsCreateOpen(false);
+            queryClient.invalidateQueries({ queryKey: ['dns-accounts'] });
+          }}
+        />
       )}
     </>
   );
 }
 
-function DnsAccountCreateModal({ isOpen, onClose, onCreated }: { isOpen: boolean; onClose: () => void; onCreated: () => void }) {
+function DnsAccountCreateModal({
+  isOpen,
+  onClose,
+  onCreated,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  onCreated: () => void;
+}) {
   const [error, setError] = useState('');
   const { register, handleSubmit, formState } = useForm({
     defaultValues: { name: '', type: 'cloudflare', authorization: '' },
@@ -157,8 +192,14 @@ function DnsAccountCreateModal({ isOpen, onClose, onCreated }: { isOpen: boolean
     <AppModal isOpen={isOpen} onClose={onClose} title="添加 DNS 账号">
       <form onSubmit={onSubmit} className="space-y-5">
         {error && <InlineMessage tone="danger" message={error} />}
-        <ResourceField label="账号名称" error={formState.errors.name?.message as string}>
-          <ResourceInput placeholder="Cloudlfare 邮箱账号" {...register('name', { required: '请输入名称' })} />
+        <ResourceField
+          label="账号名称"
+          error={formState.errors.name?.message as string}
+        >
+          <ResourceInput
+            placeholder="Cloudlfare 邮箱账号"
+            {...register('name', { required: '请输入名称' })}
+          />
         </ResourceField>
         <ResourceField label="DNS 服务商">
           <ResourceSelect {...register('type')}>
@@ -166,7 +207,9 @@ function DnsAccountCreateModal({ isOpen, onClose, onCreated }: { isOpen: boolean
           </ResourceSelect>
         </ResourceField>
         <ResourceField label="API Token" hint="请勿使用 Global API Key">
-          <ResourceInput {...register('authorization', { required: '请输入 Token' })} />
+          <ResourceInput
+            {...register('authorization', { required: '请输入 Token' })}
+          />
         </ResourceField>
         <PrimaryButton type="submit" disabled={createMutation.isPending}>
           {createMutation.isPending ? '提交中...' : '提交'}

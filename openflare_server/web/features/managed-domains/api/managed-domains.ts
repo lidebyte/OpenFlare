@@ -17,7 +17,10 @@ export function createManagedDomain(payload: ManagedDomainMutationPayload) {
   });
 }
 
-export function updateManagedDomain(id: number, payload: ManagedDomainMutationPayload) {
+export function updateManagedDomain(
+  id: number,
+  payload: ManagedDomainMutationPayload,
+) {
   return apiRequest<ManagedDomainItem>(`/managed-domains/${id}/update`, {
     method: 'POST',
     body: JSON.stringify(payload),

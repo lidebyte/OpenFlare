@@ -33,45 +33,68 @@ export function AboutPage() {
   }
 
   if (aboutQuery.isError) {
-    return <ErrorState title='关于页加载失败' description={getErrorMessage(aboutQuery.error)} />;
+    return (
+      <ErrorState
+        title="关于页加载失败"
+        description={getErrorMessage(aboutQuery.error)}
+      />
+    );
   }
 
   if (statusQuery.isError) {
-    return <ErrorState title='系统状态加载失败' description={getErrorMessage(statusQuery.error)} />;
+    return (
+      <ErrorState
+        title="系统状态加载失败"
+        description={getErrorMessage(statusQuery.error)}
+      />
+    );
   }
 
   const aboutContent = aboutQuery.data?.trim() ?? '';
   const status = statusQuery.data;
 
   if (!status) {
-    return <EmptyState title='暂无系统信息' description='未能获取 OpenFlare 的公开状态信息。' />;
+    return (
+      <EmptyState
+        title="暂无系统信息"
+        description="未能获取 OpenFlare 的公开状态信息。"
+      />
+    );
   }
 
   return (
-    <div className='space-y-6'>
+    <div className="space-y-6">
       <AppCard
-        title='关于 OpenFlare'
-        description='公开展示当前系统简介、版本信息与项目入口。'
-        action={<StatusBadge label={status.version || 'dev'} variant='info' />}
+        title="关于 OpenFlare"
+        description="公开展示当前系统简介、版本信息与项目入口。"
+        action={<StatusBadge label={status.version || 'dev'} variant="info" />}
       >
-        <div className='grid gap-4 md:grid-cols-3'>
-          <div className='rounded-2xl border border-[var(--border-default)] bg-[var(--surface-muted)] px-4 py-4'>
-            <p className='text-xs uppercase tracking-[0.2em] text-[var(--foreground-muted)]'>系统名称</p>
-            <p className='mt-2 text-sm font-medium text-[var(--foreground-primary)]'>{status.system_name || 'OpenFlare'}</p>
+        <div className="grid gap-4 md:grid-cols-3">
+          <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-muted)] px-4 py-4">
+            <p className="text-xs tracking-[0.2em] text-[var(--foreground-muted)] uppercase">
+              系统名称
+            </p>
+            <p className="mt-2 text-sm font-medium text-[var(--foreground-primary)]">
+              {status.system_name || 'OpenFlare'}
+            </p>
           </div>
-          <div className='rounded-2xl border border-[var(--border-default)] bg-[var(--surface-muted)] px-4 py-4'>
-            <p className='text-xs uppercase tracking-[0.2em] text-[var(--foreground-muted)]'>Server 启动时间</p>
-            <p className='mt-2 text-sm font-medium text-[var(--foreground-primary)]'>
+          <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-muted)] px-4 py-4">
+            <p className="text-xs tracking-[0.2em] text-[var(--foreground-muted)] uppercase">
+              Server 启动时间
+            </p>
+            <p className="mt-2 text-sm font-medium text-[var(--foreground-primary)]">
               {formatDateTime(new Date(status.start_time * 1000))}
             </p>
           </div>
-          <div className='rounded-2xl border border-[var(--border-default)] bg-[var(--surface-muted)] px-4 py-4'>
-            <p className='text-xs uppercase tracking-[0.2em] text-[var(--foreground-muted)]'>项目仓库</p>
+          <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-muted)] px-4 py-4">
+            <p className="text-xs tracking-[0.2em] text-[var(--foreground-muted)] uppercase">
+              项目仓库
+            </p>
             <a
-              href='https://github.com/Rain-kl/OpenFlare'
-              target='_blank'
-              rel='noreferrer'
-              className='mt-2 block text-sm font-medium text-[var(--brand-primary)] transition hover:opacity-80'
+              href="https://github.com/Rain-kl/OpenFlare"
+              target="_blank"
+              rel="noreferrer"
+              className="mt-2 block text-sm font-medium text-[var(--brand-primary)] transition hover:opacity-80"
             >
               github.com/Rain-kl/OpenFlare
             </a>
@@ -80,21 +103,29 @@ export function AboutPage() {
       </AppCard>
 
       {aboutContent ? (
-        <AppCard title='项目介绍' description='以下内容由系统设置中的“关于内容”维护。'>
+        <AppCard
+          title="项目介绍"
+          description="以下内容由系统设置中的“关于内容”维护。"
+        >
           <div
-            className='prose prose-sm max-w-none text-[var(--foreground-primary)] [&_a]:text-[var(--brand-primary)]'
-            dangerouslySetInnerHTML={{ __html: marked.parse(aboutContent) as string }}
+            className="prose prose-sm max-w-none text-[var(--foreground-primary)] [&_a]:text-[var(--brand-primary)]"
+            dangerouslySetInnerHTML={{
+              __html: marked.parse(aboutContent) as string,
+            }}
           />
         </AppCard>
       ) : (
         <EmptyState
-          title='尚未配置关于内容'
-          description='可在设置页的“其他设置”标签中编写 Markdown / HTML 内容，这里会自动同步展示。'
+          title="尚未配置关于内容"
+          description="可在设置页的“其他设置”标签中编写 Markdown / HTML 内容，这里会自动同步展示。"
         />
       )}
 
-      <div className='flex flex-wrap gap-3 text-sm'>
-        <Link href='/login' className='text-[var(--brand-primary)] transition hover:opacity-80'>
+      <div className="flex flex-wrap gap-3 text-sm">
+        <Link
+          href="/login"
+          className="text-[var(--brand-primary)] transition hover:opacity-80"
+        >
           前往登录
         </Link>
       </div>

@@ -123,7 +123,10 @@ const rateLimitSchema = z
     limit_rate: z.string(),
   })
   .superRefine((value, context) => {
-    for (const field of ['limit_conn_per_server', 'limit_conn_per_ip'] as const) {
+    for (const field of [
+      'limit_conn_per_server',
+      'limit_conn_per_ip',
+    ] as const) {
       const rawValue = value[field].trim();
       if (!rawValue) {
         continue;
@@ -369,7 +372,9 @@ function DomainSettingsSection({
         <ResourceField
           label="域名列表"
           hint="每行配置一个域名。可为不同域名选择不同证书，相同证书也可以重复选择。"
-          error={form.formState.errors.domain_rows?.message as string | undefined}
+          error={
+            form.formState.errors.domain_rows?.message as string | undefined
+          }
           container="div"
         >
           <Controller
@@ -490,7 +495,10 @@ function RateLimitSection({
           error={form.formState.errors.limit_rate?.message}
           className="md:col-span-2"
         >
-          <ResourceInput placeholder="512k/1m" {...form.register('limit_rate')} />
+          <ResourceInput
+            placeholder="512k/1m"
+            {...form.register('limit_rate')}
+          />
         </ResourceField>
       </form>
     </ConfigSectionShell>
@@ -538,7 +546,9 @@ function ReverseProxySection({
         onSubmit={form.handleSubmit((values) => {
           const { urls } = parseOriginUrls(values.origin_urls_text);
           const primaryOrigin = parseOriginUrl(urls[0]);
-          const { headers } = parseCustomHeadersText(values.custom_headers_text);
+          const { headers } = parseCustomHeadersText(
+            values.custom_headers_text,
+          );
 
           onSave(
             buildPayloadFromRoute(route, {
@@ -565,7 +575,9 @@ function ReverseProxySection({
           <ResourceTextarea
             aria-label="上游地址"
             className="min-h-40"
-            placeholder={'https://origin-a.internal:443\nhttps://origin-b.internal:443'}
+            placeholder={
+              'https://origin-a.internal:443\nhttps://origin-b.internal:443'
+            }
             {...form.register('origin_urls_text')}
           />
         </ResourceField>
@@ -593,7 +605,10 @@ function ReverseProxySection({
           />
         </ResourceField>
 
-        <ResourceField label="备注" error={form.formState.errors.remark?.message}>
+        <ResourceField
+          label="备注"
+          error={form.formState.errors.remark?.message}
+        >
           <ResourceTextarea
             placeholder="例如：多活回源，优先使用上海入口"
             {...form.register('remark')}
@@ -617,7 +632,8 @@ function CacheSection({
     resolver: zodResolver(cacheSchema),
     defaultValues: {
       cache_enabled: route.cache_enabled,
-      cache_policy: (route.cache_policy || 'url') as CacheValues['cache_policy'],
+      cache_policy: (route.cache_policy ||
+        'url') as CacheValues['cache_policy'],
       cache_rules_text: route.cache_rule_list.join('\n'),
     },
   });
@@ -625,7 +641,8 @@ function CacheSection({
   useEffect(() => {
     form.reset({
       cache_enabled: route.cache_enabled,
-      cache_policy: (route.cache_policy || 'url') as CacheValues['cache_policy'],
+      cache_policy: (route.cache_policy ||
+        'url') as CacheValues['cache_policy'],
       cache_rules_text: route.cache_rule_list.join('\n'),
     });
   }, [form, route]);
@@ -650,7 +667,9 @@ function CacheSection({
               cache_enabled: values.cache_enabled,
               cache_policy: values.cache_enabled ? values.cache_policy : 'url',
               cache_rules:
-                values.cache_enabled && values.cache_policy !== 'url' ? rules : [],
+                values.cache_enabled && values.cache_policy !== 'url'
+                  ? rules
+                  : [],
             }),
             { message: '缓存设置已保存。' },
           );
@@ -770,7 +789,13 @@ type PowValues = z.infer<typeof powSchema>;
 
 function buildPowListFromConfig(
   list:
-    | { ips?: string[]; ip_cidrs?: string[]; paths?: string[]; path_regexes?: string[]; user_agents?: string[] }
+    | {
+        ips?: string[];
+        ip_cidrs?: string[];
+        paths?: string[];
+        path_regexes?: string[];
+        user_agents?: string[];
+      }
     | undefined,
 ): PowListValues {
   return {
@@ -923,7 +948,7 @@ function PowSection({
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           <fieldset disabled={!watchedEnabled} className="space-y-4">
-            <legend className="text-sm font-medium text-[var(--foreground-primary)] mb-2">
+            <legend className="mb-2 text-sm font-medium text-[var(--foreground-primary)]">
               白名单（匹配的请求跳过 PoW）
             </legend>
             <ResourceField label="IP" hint="每行一个 IP 地址">
@@ -964,7 +989,7 @@ function PowSection({
           </fieldset>
 
           <fieldset disabled={!watchedEnabled} className="space-y-4">
-            <legend className="text-sm font-medium text-[var(--foreground-primary)] mb-2">
+            <legend className="mb-2 text-sm font-medium text-[var(--foreground-primary)]">
               黑名单（匹配的请求必须 PoW）
             </legend>
             <ResourceField label="IP" hint="每行一个 IP 地址">
@@ -1178,7 +1203,9 @@ export function ProxyRouteConfigPage({
       setFeedback({ tone: 'success', message: context.message });
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ['proxy-routes'] }),
-        queryClient.invalidateQueries({ queryKey: ['config-versions', 'diff'] }),
+        queryClient.invalidateQueries({
+          queryKey: ['config-versions', 'diff'],
+        }),
       ]);
     },
     onError: (error) => {

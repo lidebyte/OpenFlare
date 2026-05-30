@@ -13,7 +13,10 @@ import {
   getTlsCertificate,
   getTlsCertificateContent,
 } from '@/features/tls-certificates/api/tls-certificates';
-import { getCertificateStatus, getErrorMessage } from '@/features/websites/utils';
+import {
+  getCertificateStatus,
+  getErrorMessage,
+} from '@/features/websites/utils';
 import {
   CodeBlock,
   DangerButton,
@@ -81,11 +84,7 @@ export function CertificateDetailModal({
           <SecondaryButton type="button" onClick={onClose}>
             关闭
           </SecondaryButton>
-          <PrimaryButton
-            type="button"
-            onClick={onEdit}
-            disabled={!certificate}
-          >
+          <PrimaryButton type="button" onClick={onEdit} disabled={!certificate}>
             编辑证书
           </PrimaryButton>
           <DangerButton
@@ -112,15 +111,12 @@ export function CertificateDetailModal({
           )}
         />
       ) : !certificate || !content ? (
-        <EmptyState
-          title="证书不存在"
-          description="当前证书可能已被删除。"
-        />
+        <EmptyState title="证书不存在" description="当前证书可能已被删除。" />
       ) : (
         <div className="space-y-6">
           <div className="grid gap-4 md:grid-cols-2">
             <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-elevated)] px-4 py-4">
-              <p className="text-xs uppercase tracking-[0.18em] text-[var(--foreground-muted)]">
+              <p className="text-xs tracking-[0.18em] text-[var(--foreground-muted)] uppercase">
                 证书名称
               </p>
               <p className="mt-2 text-sm text-[var(--foreground-primary)]">
@@ -128,7 +124,7 @@ export function CertificateDetailModal({
               </p>
             </div>
             <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-elevated)] px-4 py-4">
-              <p className="text-xs uppercase tracking-[0.18em] text-[var(--foreground-muted)]">
+              <p className="text-xs tracking-[0.18em] text-[var(--foreground-muted)] uppercase">
                 状态
               </p>
               <div className="mt-2">
@@ -138,7 +134,7 @@ export function CertificateDetailModal({
               </div>
             </div>
             <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-elevated)] px-4 py-4">
-              <p className="text-xs uppercase tracking-[0.18em] text-[var(--foreground-muted)]">
+              <p className="text-xs tracking-[0.18em] text-[var(--foreground-muted)] uppercase">
                 生效时间
               </p>
               <p className="mt-2 text-sm text-[var(--foreground-primary)]">
@@ -146,7 +142,7 @@ export function CertificateDetailModal({
               </p>
             </div>
             <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-elevated)] px-4 py-4">
-              <p className="text-xs uppercase tracking-[0.18em] text-[var(--foreground-muted)]">
+              <p className="text-xs tracking-[0.18em] text-[var(--foreground-muted)] uppercase">
                 到期时间
               </p>
               <p className="mt-2 text-sm text-[var(--foreground-primary)]">
@@ -156,7 +152,7 @@ export function CertificateDetailModal({
           </div>
 
           <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-elevated)] px-4 py-4">
-            <p className="text-xs uppercase tracking-[0.18em] text-[var(--foreground-muted)]">
+            <p className="text-xs tracking-[0.18em] text-[var(--foreground-muted)] uppercase">
               备注
             </p>
             <p className="mt-2 text-sm leading-6 text-[var(--foreground-primary)]">
@@ -180,7 +176,7 @@ export function CertificateDetailModal({
                   复制
                 </SecondaryButton>
               </div>
-              <CodeBlock className="max-h-56 overflow-y-auto whitespace-pre-wrap break-all">
+              <CodeBlock className="max-h-56 overflow-y-auto break-all whitespace-pre-wrap">
                 {content.cert_pem}
               </CodeBlock>
             </div>
@@ -199,7 +195,7 @@ export function CertificateDetailModal({
                   复制
                 </SecondaryButton>
               </div>
-              <CodeBlock className="max-h-56 overflow-y-auto whitespace-pre-wrap break-all">
+              <CodeBlock className="max-h-56 overflow-y-auto break-all whitespace-pre-wrap">
                 {content.key_pem}
               </CodeBlock>
             </div>

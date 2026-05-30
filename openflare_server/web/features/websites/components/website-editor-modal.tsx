@@ -90,7 +90,7 @@ export function WebsiteEditorModal({
   });
 
   const currentCertificate = watchedCertId
-    ? certificates.find((item) => item.id === Number(watchedCertId)) ?? null
+    ? (certificates.find((item) => item.id === Number(watchedCertId)) ?? null)
     : null;
 
   const handleSubmit = form.handleSubmit((values) => {
@@ -215,7 +215,7 @@ export function WebsiteEditorModal({
 
         <div className="grid gap-4 md:grid-cols-3">
           <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-elevated)] px-4 py-4">
-            <p className="text-xs uppercase tracking-[0.2em] text-[var(--foreground-muted)]">
+            <p className="text-xs tracking-[0.2em] text-[var(--foreground-muted)] uppercase">
               当前域名
             </p>
             <p className="mt-2 text-sm text-[var(--foreground-primary)]">
@@ -223,7 +223,7 @@ export function WebsiteEditorModal({
             </p>
           </div>
           <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-elevated)] px-4 py-4">
-            <p className="text-xs uppercase tracking-[0.2em] text-[var(--foreground-muted)]">
+            <p className="text-xs tracking-[0.2em] text-[var(--foreground-muted)] uppercase">
               匹配类型
             </p>
             <div className="mt-2">
@@ -235,12 +235,14 @@ export function WebsiteEditorModal({
             </div>
           </div>
           <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-elevated)] px-4 py-4">
-            <p className="text-xs uppercase tracking-[0.2em] text-[var(--foreground-muted)]">
+            <p className="text-xs tracking-[0.2em] text-[var(--foreground-muted)] uppercase">
               当前证书
             </p>
             <div className="mt-2">
               <StatusBadge
-                label={currentCertificate ? currentCertificate.name : '未绑定证书'}
+                label={
+                  currentCertificate ? currentCertificate.name : '未绑定证书'
+                }
                 variant={currentCertificate ? 'success' : 'warning'}
               />
             </div>

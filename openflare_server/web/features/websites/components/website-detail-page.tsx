@@ -143,13 +143,16 @@ export function WebsiteDetailPage({ websiteId }: { websiteId: string }) {
     enabled: Boolean(wafRouteID),
   });
   const wafMutation = useMutation({
-    mutationFn: (ids: number[]) => replaceWAFSiteRuleGroups(wafRouteID ?? 0, ids),
+    mutationFn: (ids: number[]) =>
+      replaceWAFSiteRuleGroups(wafRouteID ?? 0, ids),
     onSuccess: async (view) => {
       setWafSelectedIDs(view.applied_ids);
       setFeedback({ tone: 'success', message: '网站 WAF 规则组已更新。' });
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ['waf'] }),
-        queryClient.invalidateQueries({ queryKey: ['config-versions', 'diff'] }),
+        queryClient.invalidateQueries({
+          queryKey: ['config-versions', 'diff'],
+        }),
       ]);
     },
     onError: (error) => {

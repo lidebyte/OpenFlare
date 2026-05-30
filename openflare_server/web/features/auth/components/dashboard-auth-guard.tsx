@@ -18,15 +18,18 @@ export function DashboardAuthGuard({ children }: DashboardAuthGuardProps) {
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      const redirect = pathname && pathname !== '/' ? `?redirect=${encodeURIComponent(pathname)}` : '';
+      const redirect =
+        pathname && pathname !== '/'
+          ? `?redirect=${encodeURIComponent(pathname)}`
+          : '';
       router.replace(`/login${redirect}`);
     }
   }, [isAuthenticated, isLoading, pathname, router]);
 
   if (isLoading || !isAuthenticated) {
     return (
-      <main className='flex min-h-screen items-center justify-center px-4 py-8'>
-        <LoadingState className='w-full max-w-md' />
+      <main className="flex min-h-screen items-center justify-center px-4 py-8">
+        <LoadingState className="w-full max-w-md" />
       </main>
     );
   }

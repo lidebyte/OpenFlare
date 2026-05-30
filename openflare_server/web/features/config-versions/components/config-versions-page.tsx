@@ -285,7 +285,10 @@ function PublishPreviewCard({
               {isActiveVersionDetailLoading ? (
                 <LoadingState />
               ) : activeVersionDetailError ? (
-                <InlineMessage tone="danger" message={activeVersionDetailError} />
+                <InlineMessage
+                  tone="danger"
+                  message={activeVersionDetailError}
+                />
               ) : activeVersionDetail ? (
                 <CodeBlock className="max-h-[32rem] whitespace-pre-wrap">
                   {activeVersionDetail.main_config}
@@ -520,7 +523,11 @@ export function ConfigVersionsPage() {
               <SecondaryButton
                 type="button"
                 onClick={() => {
-                  if (window.confirm('确认强制重新发布吗？这会忽略配置变化检查并立即生成一个新版本。')) {
+                  if (
+                    window.confirm(
+                      '确认强制重新发布吗？这会忽略配置变化检查并立即生成一个新版本。',
+                    )
+                  ) {
                     publishMutation.mutate(true);
                   }
                 }}
@@ -672,7 +679,9 @@ export function ConfigVersionsPage() {
       <CleanupConfigVersionsModal
         isOpen={isCleanupModalOpen}
         onClose={() => setIsCleanupModalOpen(false)}
-        onConfirm={(keepCount) => cleanupMutation.mutate({ keep_count: keepCount })}
+        onConfirm={(keepCount) =>
+          cleanupMutation.mutate({ keep_count: keepCount })
+        }
         isPending={cleanupMutation.isPending}
       />
     </>

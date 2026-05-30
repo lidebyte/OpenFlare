@@ -100,9 +100,7 @@ export function buildDomainRowsFromRoute(
   if (domainCertIDs.length === domains.length) {
     return domains.map((domain, index) => ({
       domain,
-      certificateId: domainCertIDs[index]
-        ? String(domainCertIDs[index])
-        : '',
+      certificateId: domainCertIDs[index] ? String(domainCertIDs[index]) : '',
     }));
   }
 
@@ -185,7 +183,9 @@ export function DomainListInput({
                   value={row.domain}
                   list={`${listId}-${index}`}
                   aria-label={`域名 ${index + 1}`}
-                  placeholder={index === 0 ? domainPlaceholder : 'www.example.com'}
+                  placeholder={
+                    index === 0 ? domainPlaceholder : 'www.example.com'
+                  }
                   onBlur={onBlur}
                   onChange={(event) => {
                     const nextRows = safeRows.slice();

@@ -1,5 +1,6 @@
 const devBackendUrl =
-  process.env.NEXT_DEV_BACKEND_URL?.replace(/\/+$/, '') || 'http://127.0.0.1:3000';
+  process.env.NEXT_DEV_BACKEND_URL?.replace(/\/+$/, '') ||
+  'http://127.0.0.1:3000';
 const enableDevProxy = process.env.NEXT_DEV_PROXY === 'true';
 
 export default function createNextConfig() {
@@ -10,7 +11,16 @@ export default function createNextConfig() {
       unoptimized: true,
     },
     eslint: {
-      dirs: ['app', 'components', 'features', 'hooks', 'lib', 'store', 'tests', 'types'],
+      dirs: [
+        'app',
+        'components',
+        'features',
+        'hooks',
+        'lib',
+        'store',
+        'tests',
+        'types',
+      ],
     },
   };
 

@@ -15,7 +15,10 @@ export function createDnsAccount(payload: DnsAccountMutationPayload) {
   });
 }
 
-export function updateDnsAccount(id: number, payload: DnsAccountMutationPayload) {
+export function updateDnsAccount(
+  id: number,
+  payload: DnsAccountMutationPayload,
+) {
   return apiRequest<DnsAccountItem>(`/dns-accounts/${id}/update`, {
     method: 'POST',
     body: JSON.stringify(payload),

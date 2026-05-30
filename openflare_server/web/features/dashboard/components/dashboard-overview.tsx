@@ -137,8 +137,8 @@ function NodeHealthRow({ node }: { node: DashboardNodeHealth }) {
           {isWSConnectedLastSeen(node.last_seen_at)
             ? ' WS 已连接'
             : node.last_seen_at
-            ? ` ${formatRelativeTime(node.last_seen_at)} · ${formatDateTime(node.last_seen_at)}`
-            : ' 暂无'}
+              ? ` ${formatRelativeTime(node.last_seen_at)} · ${formatDateTime(node.last_seen_at)}`
+              : ' 暂无'}
         </p>
       </div>
     </Link>
@@ -249,9 +249,7 @@ export function DashboardOverview() {
       </div>
 
       <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
-        <AppCard
-          title="24 小时网络与磁盘趋势"
-        >
+        <AppCard title="24 小时网络与磁盘趋势">
           <div className="space-y-6">
             <TrendChart
               labels={overview.trends.network_24h.map((point) =>
@@ -311,9 +309,7 @@ export function DashboardOverview() {
           </div>
         </AppCard>
 
-        <AppCard
-          title="Top 节点榜单"
-        >
+        <AppCard title="Top 节点榜单">
           <div className="grid gap-6 xl:grid-cols-1">
             <div>
               <p className="mb-3 text-xs tracking-[0.22em] text-[var(--foreground-muted)] uppercase">
@@ -352,10 +348,7 @@ export function DashboardOverview() {
       </div>
 
       <div className="grid gap-6 xl:grid-cols-3">
-        <AppCard
-          title="来源分布"
-          description="聚合最近 24 小时主要来源国家。"
-        >
+        <AppCard title="来源分布" description="聚合最近 24 小时主要来源国家。">
           <RankChart
             items={overview.distributions.source_countries.map((item) => ({
               label: item.key,
@@ -380,10 +373,7 @@ export function DashboardOverview() {
           />
         </AppCard>
 
-        <AppCard
-          title="Top Domain"
-          description="观察主要流量集中在哪些域名。"
-        >
+        <AppCard title="Top Domain" description="观察主要流量集中在哪些域名。">
           <RankChart
             items={overview.distributions.top_domains.map((item) => ({
               label: item.key,

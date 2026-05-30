@@ -354,10 +354,10 @@ export function NodesPage() {
                           {isWSConnectedLastSeen(node.last_seen_at)
                             ? 'WS 已连接'
                             : isMeaningfulTime(node.last_seen_at)
-                            ? `${formatRelativeTime(
-                                node.last_seen_at,
-                              )} · ${formatDateTime(node.last_seen_at)}`
-                            : '暂无'}
+                              ? `${formatRelativeTime(
+                                  node.last_seen_at,
+                                )} · ${formatDateTime(node.last_seen_at)}`
+                              : '暂无'}
                         </td>
                         <td className="px-3 py-4">
                           <div className="flex flex-wrap gap-2">

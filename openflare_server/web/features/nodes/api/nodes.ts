@@ -64,9 +64,9 @@ export function requestNodeAgentUpdate(
 }
 
 export function requestNodeForceSync(id: number) {
-	return apiRequest<NodeItem>(`/nodes/${id}/force-sync`, {
-		method: 'POST',
-	});
+  return apiRequest<NodeItem>(`/nodes/${id}/force-sync`, {
+    method: 'POST',
+  });
 }
 
 export function requestNodeOpenrestyRestart(id: number) {

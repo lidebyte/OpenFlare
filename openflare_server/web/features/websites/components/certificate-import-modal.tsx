@@ -52,8 +52,9 @@ export function CertificateImportModal({
   const queryClient = useQueryClient();
   const [importMode, setImportMode] = useState<'manual' | 'file'>('manual');
   const [feedback, setFeedback] = useState<FeedbackState | null>(null);
-  const [fileForm, setFileForm] =
-    useState<FileImportFormValues>(defaultFileImportValues);
+  const [fileForm, setFileForm] = useState<FileImportFormValues>(
+    defaultFileImportValues,
+  );
   const [certFile, setCertFile] = useState<File | null>(null);
   const [keyFile, setKeyFile] = useState<File | null>(null);
   const [fileInputNonce, setFileInputNonce] = useState(0);
@@ -280,9 +281,7 @@ export function CertificateImportModal({
                 <ResourceField
                   label="私钥文件"
                   hint={
-                    keyFile
-                      ? `已选择：${keyFile.name}`
-                      : '请选择 KEY/PEM 文件'
+                    keyFile ? `已选择：${keyFile.name}` : '请选择 KEY/PEM 文件'
                   }
                 >
                   <ResourceInput

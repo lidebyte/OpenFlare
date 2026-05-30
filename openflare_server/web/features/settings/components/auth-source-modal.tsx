@@ -386,7 +386,7 @@ export function AuthSourceModal({
                 }
               />
             </ResourceField>
-            <div className="md:col-span-2 rounded-2xl border border-[var(--status-info-border)] bg-[var(--status-info-soft)] px-4 py-3 text-sm leading-6 text-[var(--status-info-foreground)]">
+            <div className="rounded-2xl border border-[var(--status-info-border)] bg-[var(--status-info-soft)] px-4 py-3 text-sm leading-6 text-[var(--status-info-foreground)] md:col-span-2">
               第三方平台的 Redirect URI / Callback URL 请填写：
               <span className="font-medium">
                 {' '}
