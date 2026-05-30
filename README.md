@@ -94,6 +94,7 @@ docker compose up -d
 ### 2. 安装 Agent
 
 安装 Agent 前请先在节点上安装 OpenResty，或改用内置 OpenResty 的 Agent Docker 镜像。
+
 你可以在控制面板的节点管理->详情->节点信息->节点标识与部署复制安装命令，或直接使用下面的脚本：
 
 #### Docker 部署
