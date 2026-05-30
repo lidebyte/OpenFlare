@@ -455,7 +455,7 @@ function RuleEntryModal({
             取消
           </SecondaryButton>
           <PrimaryButton type="button" disabled={pending} onClick={onSubmit}>
-            {pending ? '处理中...' : '添加到草稿'}
+            {pending ? '处理中...' : '添加'}
           </PrimaryButton>
         </div>
       }
@@ -465,8 +465,8 @@ function RuleEntryModal({
           <ResourceField label="类型" container="div">
             <div className="grid grid-cols-2 gap-3">
               {[
-                { value: 'whitelist', label: '白名单' },
                 { value: 'blacklist', label: '黑名单' },
+                { value: 'whitelist', label: '白名单' },
               ].map((option) => (
                 <button
                   key={option.value}
